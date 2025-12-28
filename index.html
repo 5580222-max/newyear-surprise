@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Paglet ❤️</title>
+<title>For My Paglet</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
@@ -11,352 +11,194 @@
 @font-face { font-family: "NexaHeavy"; src: url("Nexa-Heavy.ttf"); }
 @font-face { font-family: "BebasKai"; src: url("BebasKai.ttf"); }
 
-:root {
-    --primary-red: #b71c1c;
-    --soft-pink: rgba(255,245,247,0.9);
+html,body{
+margin:0;height:100%;overflow:hidden;
+font-family:'Quicksand',sans-serif;
+background:#fff;
 }
 
-html, body {
-    margin:0; padding:0;
-    width:100%; height:100%;
-    overflow:hidden;
-    font-family:'Quicksand', sans-serif;
+.page{
+position:absolute;inset:0;
+display:none;
+justify-content:center;
+align-items:center;
 }
 
-.page {
-    position:absolute;
-    inset:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    transition:opacity 1.2s ease, filter 1.2s ease;
+.page.active{display:flex;}
+
+.fade-out{
+opacity:0;
+filter:blur(10px);
+transition:1.2s ease;
+pointer-events:none;
 }
 
-.page.active { display:flex; }
-.fade-out { opacity:0; filter:blur(10px); pointer-events:none; }
+/* PAGE 1 */
+#page1{z-index:3;}
+.main-box{
+background:rgba(255,192,203,.7);
+border:4px solid rgba(0,0,0,.7);
+padding:30px;
+width:85%;max-width:450px;
+text-align:center;
+box-shadow:10px 10px 0 rgba(0,0,0,.2);
+}
+.wrapper{font-family:"NexaHeavy";}
+.cursor{
+display:inline-block;width:8px;height:1.2em;
+background:#d02a50;margin-left:4px;
+animation:blink 1s steps(2) infinite;
+}
+@keyframes blink{50%{opacity:0}}
+.soft-next{opacity:0;margin-top:15px;color:#555}
+.tap-to-start{position:fixed;bottom:30px;width:100%;text-align:center;opacity:.6}
 
-/* ---------- PAGE 1 ---------- */
-#page1 { background:#fff; z-index:10; }
-
-.main-box {
-    background:rgba(255,192,203,0.7);
-    border:4px solid rgba(0,0,0,0.7);
-    padding:30px;
-    width:85%;
-    max-width:450px;
-    text-align:center;
-    box-shadow:10px 10px 0 rgba(0,0,0,0.2);
-    animation:breathe 7s ease-in-out infinite;
+/* PAGE 2 */
+#page2{z-index:2;}
+.background-marquee{
+position:absolute;top:50%;width:200%;
+transform:translateY(-50%);
+white-space:nowrap;
+font-family:'Dancing Script';
+font-size:8vw;
+color:rgba(183,28,28,.08);
+animation:scroll 20s linear infinite;
+}
+@keyframes scroll{
+from{transform:translateY(-50%) translateX(0)}
+to{transform:translateY(-50%) translateX(-50%)}
+}
+#lineBox{
+font-family:"BebasKai";
+background:rgba(255,245,247,.9);
+padding:40px 25px;
+border-radius:30px;
+font-size:1.4rem;
+color:#b71c1c;
+text-align:center;
+}
+.show{animation:appear 1s forwards}
+@keyframes appear{
+from{opacity:0;filter:blur(10px);transform:scale(.9)}
+to{opacity:1;filter:none;transform:scale(1)}
 }
 
-@keyframes breathe {
-    0%,100%{transform:scale(0.98);}
-    50%{transform:scale(1.02);}
+/* PAGE 3 */
+#page3{z-index:1;}
+.lock-container{width:80%;max-width:320px}
+.box{
+padding:20px;background:#ffecec;
+border-radius:20px;margin-bottom:15px;
+border:2px solid #f8bbd0;
 }
-
-.wrapper {
-    font-family:"NexaHeavy";
-    font-size:1.2rem;
-    line-height:1.6;
-    letter-spacing:0.04em;
+.box p{font-family:"BebasKai";color:#b71c1c}
+input{width:100%;padding:10px;border-radius:10px}
+button{
+width:100%;padding:15px;
+background:#b71c1c;color:#fff;
+border:none;border-radius:15px;
+font-family:"BebasKai";
 }
-
-.cursor {
-    display:inline-block;
-    width:8px;
-    height:1.2em;
-    background:#d02a50;
-    margin-left:4px;
-    animation:blink 1s steps(2) infinite;
-}
-
-@keyframes blink { 50%{opacity:0;} }
-
-.soft-next {
-    margin-top:18px;
-    font-size:0.85rem;
-    opacity:0;
-    transition:1.5s;
-    color:#555;
-}
-
-.tap-to-start {
-    position:fixed;
-    bottom:30px;
-    width:100%;
-    text-align:center;
-    opacity:0.6;
-    font-size:0.8rem;
-}
-
-/* ---------- PAGE 2 ---------- */
-#page2 { background:#fff; z-index:5; }
-
-.background-marquee {
-    position:absolute;
-    top:50%;
-    width:200%;
-    transform:translateY(-50%);
-    white-space:nowrap;
-    font-family:'Dancing Script';
-    font-size:8vw;
-    color:rgba(183,28,28,0.08);
-    animation:scrollText 20s linear infinite;
-    pointer-events:none;
-}
-
-@keyframes scrollText {
-    from{transform:translateY(-50%) translateX(0);}
-    to{transform:translateY(-50%) translateX(-50%);}
-}
-
-#lineBox {
-    font-family:"BebasKai";
-    background:var(--soft-pink);
-    backdrop-filter:blur(10px);
-    padding:40px 25px;
-    border-radius:30px;
-    border:1px solid rgba(255,182,193,0.5);
-    box-shadow:0 15px 35px rgba(0,0,0,0.05);
-    font-size:1.4rem;
-    line-height:1.8;
-    color:var(--primary-red);
-    text-align:center;
-    max-width:400px;
-}
-
-.show { animation:appear 1.2s forwards; }
-.hide { animation:disappear 1s forwards; }
-
-@keyframes appear {
-    from{opacity:0; filter:blur(15px); transform:scale(0.9);}
-    to{opacity:1; filter:blur(0); transform:scale(1);}
-}
-
-@keyframes disappear {
-    from{opacity:1;}
-    to{opacity:0; filter:blur(15px); transform:scale(1.1);}
-}
-
-.petal {
-    position:absolute;
-    background:#ffc0cb;
-    border-radius:150% 0 150% 0;
-    opacity:0.6;
-    animation:fall linear infinite;
-}
-
-@keyframes fall {
-    0%{transform:translateY(-10vh) rotate(0); opacity:0;}
-    10%{opacity:0.7;}
-    100%{transform:translateY(110vh) rotate(360deg); opacity:0;}
-}
-
-/* ---------- PAGE 3 ---------- */
-#page3 { background:#fff; z-index:1; }
-
-.lock-container {
-    width:80%;
-    max-width:320px;
-}
-
-.box {
-    padding:20px;
-    background:#ffecec;
-    border-radius:20px;
-    margin-bottom:15px;
-    border:2px solid #f8bbd0;
-}
-
-.box p {
-    font-family:"BebasKai";
-    color:#b71c1c;
-    letter-spacing:1px;
-    margin-bottom:10px;
-}
-
-input[type="date"] {
-    width:100%;
-    padding:10px;
-    border-radius:10px;
-    border:1px solid #ddd;
-}
-
-#btnContinue {
-    width:100%;
-    padding:15px;
-    background:#b71c1c;
-    color:#fff;
-    border:none;
-    border-radius:15px;
-    font-family:"BebasKai";
-    font-size:1.2rem;
-    cursor:pointer;
-}
-
-#msg {
-    text-align:center;
-    margin-top:10px;
-    font-weight:bold;
-    color:#b71c1c;
-}
+#msg{text-align:center;margin-top:10px}
 </style>
 </head>
 
 <body>
 
-<audio id="typingSound" loop>
-    <source src="typing.wav" type="audio/wav">
-</audio>
+<audio id="typingSound" loop src="typing.wav"></audio>
+<audio id="bgMusic" loop src="tu-he-mera.wav"></audio>
 
-<audio id="bgMusic" loop>
-    <source src="tu-he-mera.wav" type="audio/wav">
-</audio>
-
-<!-- PAGE 1 -->
 <div id="page1" class="page active">
-    <div class="main-box">
-        <div class="wrapper" id="typewriterText"></div>
-        <div class="soft-next" id="nextHint">jab mann ho… aage badho</div>
-    </div>
-    <div class="tap-to-start" id="tapStart">(tap to start)</div>
+<div class="main-box">
+<div class="wrapper" id="typeText"></div>
+<div class="soft-next" id="nextHint">jab mann ho… aage badho</div>
+</div>
+<div class="tap-to-start" id="tapStart">(tap to start)</div>
 </div>
 
-<!-- PAGE 2 -->
 <div id="page2" class="page">
-    <div class="background-marquee">I MISS YOU BETI 😭</div>
-    <div id="petal-container"></div>
-    <div id="lineBox">Tap to begin... 🤍</div>
+<div class="background-marquee">I MISS YOU BETI</div>
+<div id="lineBox">Tap to begin</div>
 </div>
 
-<!-- PAGE 3 -->
 <div id="page3" class="page">
-    <div class="lock-container">
-        <div class="box">
-            <p>ENTER FALLO B'DAY</p>
-            <input type="date" id="d1" onclick="event.stopPropagation()">
-        </div>
-        <div class="box">
-            <p>ENTER NADEEM B'DAY</p>
-            <input type="date" id="d2" onclick="event.stopPropagation()">
-        </div>
-        <button id="btnContinue" onclick="event.stopPropagation(); checkLock()">CONTINUE</button>
-        <p id="msg"></p>
-    </div>
+<div class="lock-container">
+<div class="box">
+<p>ENTER FALLO B'DAY</p>
+<input type="date" id="d1" onclick="event.stopPropagation()">
+</div>
+<div class="box">
+<p>ENTER NADEEM B'DAY</p>
+<input type="date" id="d2" onclick="event.stopPropagation()">
+</div>
+<button onclick="event.stopPropagation();check()">CONTINUE</button>
+<p id="msg"></p>
+</div>
 </div>
 
 <script>
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const page3 = document.getElementById("page3");
-const typeEl = document.getElementById("typewriterText");
-const lineBox = document.getElementById("lineBox");
-const typingSound = document.getElementById("typingSound");
-const bgMusic = document.getElementById("bgMusic");
+const pages={
+p1:document.getElementById("page1"),
+p2:document.getElementById("page2"),
+p3:document.getElementById("page3")
+};
 
-typingSound.volume = 0.8;
-bgMusic.volume = 0.6;
+function showPage(p){
+Object.values(pages).forEach(x=>x.classList.remove("active"));
+p.classList.add("active");
+}
 
-let typingIdx = 0;
-let page1Started = false;
-let page1Done = false;
-let page2Idx = -1;
-let page2Animating = false;
+const msg=`Hello paglet!!!
+tumhara Nadeem tumhare baare mein hi soch raha hai ❤️`;
+let i=0,started=false,done=false;
 
-const message1 = `Hello paglet!!!\n
-tumhara Nadeem tumhare baare mein hi soch raha hai hehehe 😘😘\n
-abhi toh aur pages baaki hai… ❤️`;
+document.body.onclick=()=>{
+if(!started){
+started=true;
+document.getElementById("tapStart").style.display="none";
+typingSound.play().catch(()=>{});
+type();
+return;
+}
+if(done && pages.p1.classList.contains("active")){
+showPage(pages.p2);       // SHOW PAGE 2 FIRST
+pages.p1.classList.add("fade-out");
+return;
+}
+};
 
-const lines2 = [
-`Baby kuch der mein toh naya saal aa jayega 😌`,
-`wowww yaarrr… kitna aage aa gaye aapan 😌`,
-`Sach kahu toh woh mera best decision tha 🤍`,
-`Alhamdulillah! Allah ka shukar hai 😭`,
-`Chalo aage badhte hai… Are you ready?`
+function type(){
+if(i<msg.length){
+typeText.innerHTML=msg.slice(0,i++)+'<span class="cursor"></span>';
+setTimeout(type,50);
+}else{
+done=true;
+typingSound.pause();
+nextHint.style.opacity=1;
+}
+}
+
+const lines=[
+"Baby kuch der mein naya saal aa jayega 😌",
+"Kitna aage aa gaye hum 🤍",
+"Alhamdulillah for us",
+"Are you ready?"
 ];
-
-function type() {
-    if (typingIdx < message1.length) {
-        typeEl.innerHTML = message1.slice(0, typingIdx + 1).replace(/\n/g,"<br>") + '<span class="cursor"></span>';
-        typingIdx++;
-        setTimeout(type, 50);
-    } else {
-        page1Done = true;
-        typingSound.pause();
-        document.getElementById("nextHint").style.opacity = "1";
-    }
+let idx=0;
+pages.p2.onclick=(e)=>{
+e.stopPropagation();
+lineBox.innerHTML=lines[idx++];
+lineBox.className="show";
+if(idx===lines.length){
+setTimeout(()=>showPage(pages.p3),1200);
 }
+};
 
-function createPetal(){
-    const p = document.createElement("div");
-    p.className="petal";
-    p.style.width=p.style.height=(Math.random()*15+10)+"px";
-    p.style.left=Math.random()*100+"vw";
-    p.style.animationDuration=(Math.random()*3+2)+"s";
-    document.getElementById("petal-container").appendChild(p);
-    setTimeout(()=>p.remove(),5000);
-}
-
-document.body.addEventListener("click",()=>{
-    if(!page1Started){
-        page1Started=true;
-        document.getElementById("tapStart").style.display="none";
-        typingSound.play().catch(()=>{});
-        type();
-        return;
-    }
-
-    if(page1Done && page1.classList.contains("active")){
-        page1.classList.add("fade-out");
-        setTimeout(()=>{
-            page1.classList.remove("active");
-            page2.classList.add("active");
-            setInterval(createPetal,300);
-        },1200);
-        page1Done=false;
-        return;
-    }
-
-    if(page2.classList.contains("active") && !page2Animating){
-        page2Animating=true;
-        if(page2Idx>=0) lineBox.className="hide";
-
-        setTimeout(()=>{
-            page2Idx++;
-            if(page2Idx < lines2.length){
-                lineBox.innerHTML=lines2[page2Idx];
-                lineBox.className="show";
-                page2Animating=false;
-            } else {
-                page2.classList.add("fade-out");
-                setTimeout(()=>{
-                    page2.classList.remove("active");
-                    page3.classList.add("active");
-                },1200);
-            }
-        },800);
-    }
-});
-
-let tries = 3;
-function fmt(v){
-    if(!v) return "";
-    let [y,m,d]=v.split("-");
-    return `${d}/${m}/${y}`;
-}
-
-function checkLock(){
-    const d1=document.getElementById("d1").value;
-    const d2=document.getElementById("d2").value;
-    const msg=document.getElementById("msg");
-
-    if(fmt(d1)==="01/08/2007" && fmt(d2)==="09/08/2007"){
-        msg.style.color="green";
-        msg.innerText="Correct! Happy New Year Baby ❤️";
-    } else {
-        tries--;
-        msg.innerText=tries>0 ? `Galat hai babu! ${tries} mauke bache hai` : "Locked. Refresh page.";
-    }
+let tries=3;
+function check(){
+const f=d1.value==="2007-08-01";
+const n=d2.value==="2007-08-09";
+msg.innerText=(f&&n)?"Correct ❤️":"Galat hai";
 }
 </script>
 
