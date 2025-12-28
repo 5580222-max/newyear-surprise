@@ -10,31 +10,13 @@
 body {
   margin: 0;
   height: 100vh;
-  background: radial-gradient(circle at top, #0b1020, #020617);
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Segoe UI", sans-serif;
   overflow: hidden;
-  color: #ffffff;
-}
-
-/* ===== SOFT MOVING BACKGROUND GLOW ===== */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 45%),
-    radial-gradient(circle at 80% 70%, rgba(255,180,200,0.05), transparent 45%);
-  animation: bgMove 20s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes bgMove {
-  0%   { transform: translate(0,0); }
-  50%  { transform: translate(-25px, -35px); }
-  100% { transform: translate(0,0); }
+  color: #111;
 }
 
 /* ===== TEXT ===== */
@@ -42,9 +24,9 @@ body::before {
   max-width: 92%;
   text-align: center;
   font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 1.75;
-  letter-spacing: 0.015em;
+  font-size: 1.45rem;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
   z-index: 2;
   animation: breathe 7s ease-in-out infinite;
 }
@@ -59,7 +41,7 @@ body::before {
   display: inline-block;
   width: 8px;
   height: 1.4em;
-  background: white;
+  background: #111;
   margin-left: 4px;
   animation: blink 1s steps(2) infinite;
 }
@@ -73,24 +55,28 @@ body::before {
   bottom: 22px;
   width: 100%;
   text-align: center;
-  font-size: 0.9rem;
-  opacity: 0.6;
+  font-size: 0.85rem;
+  opacity: 0.5;
   z-index: 2;
 }
 
-/* ===== PIXEL EMOJI EFFECT ===== */
-.emoji {
+/* ===== PIXEL HEARTS ===== */
+.heart {
   position: fixed;
   bottom: -40px;
-  font-size: 18px;
-  opacity: 0.6;
+  font-size: 20px;
+  opacity: 0.25;
   animation: floatUp linear forwards;
   pointer-events: none;
+  filter: contrast(1.2);
 }
 
 @keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+  }
   to {
-    transform: translateY(-110vh);
+    transform: translateY(-110vh) scale(1.15);
     opacity: 0;
   }
 }
@@ -100,14 +86,15 @@ body::before {
 <body>
 
 <div class="wrapper" id="text"></div>
-<div class="tap" id="tap">(tap to start – use earphones 🎧)</div>
+<div class="tap" id="tap">(tap to start)</div>
 
-<!-- AUDIO FILE -->
+<!-- AUDIO -->
 <audio id="typingSound" preload="auto">
   <source src="typing.wav" type="audio/wav">
 </audio>
 
 <script>
+/* ===== MESSAGE ===== */
 const message =
 `Hello paglet!!!
 tumhara Nadeem tumhare baare mein hi soch raha hai hehehe 😘😘
@@ -116,7 +103,7 @@ saal khatam hone wala hai na???
 abhi bhi apan jhagda toh nahi kar rahe na babu 🥰
 
 abhi toh aur pages baaki hai…
-aage yahin sab padh logi kya 😘`;
+aage yahin sab padh logi kya ❤️`;
 
 const textEl = document.getElementById("text");
 const sound = document.getElementById("typingSound");
@@ -125,37 +112,37 @@ const tapEl = document.getElementById("tap");
 let i = 0;
 let started = false;
 
-/* ===== MOBILE AUDIO UNLOCK ===== */
+/* ===== AUDIO UNLOCK ===== */
 function unlockAudio() {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
   if (ctx.state === "suspended") ctx.resume();
 }
 
-/* ===== TYPING EFFECT ===== */
+/* ===== TYPE EFFECT ===== */
 function typeText() {
   if (i < message.length) {
     textEl.innerHTML =
       message.slice(0, i + 1).replace(/\n/g, "<br>") +
       '<span class="cursor"></span>';
     i++;
-    setTimeout(typeText, 38);
+    setTimeout(typeText, 42);
   } else {
     sound.pause();
     textEl.innerHTML = message.replace(/\n/g, "<br>");
   }
 }
 
-/* ===== EMOJI PARTICLES ===== */
-const emojis = ["💖","✨","💫","🥰","😘"];
+/* ===== PIXEL HEART SPAWN ===== */
+const hearts = ["❤️","🟥","💗"];
 
-function spawnEmoji() {
-  const e = document.createElement("div");
-  e.className = "emoji";
-  e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  e.style.left = Math.random() * 100 + "vw";
-  e.style.animationDuration = 8 + Math.random() * 6 + "s";
-  document.body.appendChild(e);
-  setTimeout(() => e.remove(), 15000);
+function spawnHeart() {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = 10 + Math.random() * 8 + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 20000);
 }
 
 /* ===== START ===== */
@@ -165,9 +152,15 @@ document.body.addEventListener("click", () => {
     tapEl.style.display = "none";
 
     unlockAudio();
-    sound.volume = 1.0;   // MAX web volume
+    sound.volume = 1.0;
     sound.loop = true;
     sound.play().catch(()=>{});
 
     typeText();
-    setInterval(spa
+    setInterval(spawnHeart, 1600); // slow & elegant
+  }
+});
+</script>
+
+</body>
+</html>
