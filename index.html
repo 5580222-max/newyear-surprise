@@ -61,10 +61,11 @@ body {
 <body>
 
 <div class="wrapper" id="text"></div>
-<div class="tap" id="tap">(tap to start – use earphones 🎧)</div>
+<div class="tap" id="tap">(tap to start – use earphones)</div>
 
-<audio id="typingSound">
-  <source src="clicking-keyboard-asmr-sfx-356115.mp3" type="audio/mpeg">
+<!-- AUDIO FILE -->
+<audio id="typingSound" preload="auto">
+  <source src="typing.wav" type="audio/wav">
 </audio>
 
 <script>
@@ -85,11 +86,13 @@ const tapEl = document.getElementById("tap");
 let i = 0;
 let started = false;
 
+// Required for mobile browsers
 function unlockAudio() {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
   if (ctx.state === "suspended") ctx.resume();
 }
 
+// Typing animation
 function typeText() {
   if (i < message.length) {
     textEl.innerHTML =
@@ -103,6 +106,7 @@ function typeText() {
   }
 }
 
+// Start after user tap
 document.body.addEventListener("click", () => {
   if (!started) {
     started = true;
@@ -111,7 +115,7 @@ document.body.addEventListener("click", () => {
     unlockAudio();
     sound.volume = 1.0;
     sound.loop = true;
-    sound.play().catch(()=>{});
+    sound.play().catch(() => {});
 
     typeText();
   }
