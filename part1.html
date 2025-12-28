@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just One Thought</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #0b1020, #020617);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+
+.wrapper {
+  max-width: 92%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+  transform: scale(0.97);
+  animation: breathe 7s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1); }
+  100% { transform: scale(0.97); }
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.4em;
+  background: rgba(255,255,255,0.85);
+  margin-left: 4px;
+  animation: blink 1s steps(2) infinite;
+  vertical-align: bottom;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.tap {
+  position: fixed;
+  bottom: 22px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper" id="text"></div>
+<div class="tap" id="tap">(tap to start)</div>
+
+<audio id="typingSound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_26e8d2a3f5.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const message =
+`Hello paglet!!!
+tumhara Nadeem tumhare baare mein hi soch raha hai hehehe 😘😘
+
+saal khatam hone wala hai na???
+abhi bhi apan jhagda toh nahi kar rahe na babu 🥰
+
+abhi toh aur pages baaki hai…
+aage yahin sab padh logi kya 😘`;
+
+const textEl = document.getElementById("text");
+const sound = document.getElementById("typingSound");
+const tapEl = document.getElementById("tap");
+
+let index = 0;
+let started = false;
+
+// 🔑 AUDIO CONTEXT UNLOCK (CRITICAL)
+let audioCtx;
+
+function unlockAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+}
+
+function typeText() {
+  if (index < message.length) {
+    textEl.innerHTML =
+      message.slice(0, index + 1).replace(/\n/g, "<br>") +
+      '<span class="cursor"></span>';
+    index++;
+    setTimeout(typeText, 40);
+  } else {
+    sound.pause();
+    textEl.innerHTML = message.replace(/\n/g, "<br>");
+  }
+}
+
+document.body.addEventListener("click", () => {
+  if (!started) {
+    started = true;
+    tapEl.style.display = "none";
+
+    unlockAudio();               // ✅ unlock audio
+    sound.volume = 1.0;          // loud
+    sound.currentTime = 0;
+    sound.play().catch(() => {}); // ignore silent block
+
+    typeText();
+  }
+});
+</script>
+
+</body>
+</html>
