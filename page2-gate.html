@@ -28,7 +28,7 @@ body {
 }
 
 .box {
-  background: rgba(255, 235, 238, 0.9);
+  background: rgba(255, 235, 238, 0.95);
   border-radius: 25px;
   padding: 25px;
   margin-bottom: 25px;
@@ -39,8 +39,8 @@ body {
 h2 {
   margin-bottom: 15px;
   color: #b71c1c;
-  letter-spacing: 0.15em;
-  font-size: 1.2rem;
+  letter-spacing: 0.18em;
+  font-size: 1.1rem;
 }
 
 input[type="date"] {
@@ -61,7 +61,7 @@ button {
   background: #b71c1c;
   color: #fff;
   font-size: 1rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   cursor: pointer;
 }
 
@@ -69,7 +69,7 @@ button {
   margin-top: 15px;
   font-size: 0.9rem;
   color: #b71c1c;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 @keyframes fadeIn {
@@ -82,9 +82,9 @@ button {
 <body>
 
 <div class="container">
-  
+
   <div class="box">
-    <h2>ENTER FARO B'DAY</h2>
+    <h2>ENTER FALLO B'DAY</h2>
     <input type="date" id="date1">
   </div>
 
@@ -101,18 +101,27 @@ button {
 <script>
 let attempts = 3;
 
-// Correct answers (YYYY-MM-DD format)
-const correctDate1 = "2007-08-01";
-const correctDate2 = "2007-08-09";
+// Correct answers in DD/MM/YYYY
+const correctDate1 = "01/08/2007";
+const correctDate2 = "09/08/2007";
+
+function formatToDDMMYYYY(value) {
+  if (!value) return "";
+  const [yyyy, mm, dd] = value.split("-");
+  return `${dd}/${mm}/${yyyy}`;
+}
 
 function verifyDates() {
-  const d1 = document.getElementById("date1").value;
-  const d2 = document.getElementById("date2").value;
+  const raw1 = document.getElementById("date1").value;
+  const raw2 = document.getElementById("date2").value;
   const msg = document.getElementById("message");
+
+  const d1 = formatToDDMMYYYY(raw1);
+  const d2 = formatToDDMMYYYY(raw2);
 
   if (d1 === correctDate1 && d2 === correctDate2) {
     msg.innerHTML = "🤍 Correct. Please continue…";
-    
+
     setTimeout(() => {
       window.location.href = "page3.html";
     }, 1200);
