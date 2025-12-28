@@ -2,137 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Just One Check</title>
+<title>Birthday Check</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 @font-face {
-  font-family: "BebasKai";
-  src: url("BebasKai.ttf") format("truetype");
+  font-family:BebasKai;
+  src:url("BebasKai.ttf");
 }
 
 body {
-  margin: 0;
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "BebasKai", sans-serif;
-}
-
-.container {
-  width: 90%;
-  max-width: 420px;
-  text-align: center;
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:BebasKai;
+  background:#fff;
 }
 
 .box {
-  background: rgba(255, 235, 238, 0.95);
-  border-radius: 25px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-  animation: fadeIn 1s ease;
-}
-
-h2 {
-  margin-bottom: 15px;
-  color: #b71c1c;
-  letter-spacing: 0.18em;
-  font-size: 1.1rem;
-}
-
-input[type="date"] {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  outline: none;
+  padding:25px;
+  background:#ffecec;
+  border-radius:20px;
+  margin-bottom:15px;
 }
 
 button {
-  margin-top: 10px;
-  padding: 14px 20px;
-  width: 100%;
-  border: none;
-  border-radius: 20px;
-  background: #b71c1c;
-  color: #fff;
-  font-size: 1rem;
-  letter-spacing: 0.2em;
-  cursor: pointer;
-}
-
-#message {
-  margin-top: 15px;
-  font-size: 0.9rem;
-  color: #b71c1c;
-  opacity: 0.85;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+  padding:12px;
+  width:100%;
+  border:none;
+  background:#b71c1c;
+  color:#fff;
+  border-radius:15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
+<div>
   <div class="box">
-    <h2>ENTER FALLO B'DAY</h2>
-    <input type="date" id="date1">
+    <p>ENTER FALLO B'DAY</p>
+    <input type="date" id="d1">
   </div>
-
   <div class="box">
-    <h2>ENTER NADEEM'S B'DAY</h2>
-    <input type="date" id="date2">
+    <p>ENTER NADEEM B'DAY</p>
+    <input type="date" id="d2">
   </div>
-
-  <button onclick="verifyDates()">CONTINUE</button>
-  <div id="message"></div>
-
+  <button onclick="check()">CONTINUE</button>
+  <p id="msg"></p>
 </div>
 
 <script>
-let attempts = 3;
+let tries=3;
+function fmt(v){ if(!v) return ""; let[a,b,c]=v.split("-"); return `${c}/${b}/${a}`;}
 
-// Correct answers in DD/MM/YYYY
-const correctDate1 = "01/08/2007";
-const correctDate2 = "09/08/2007";
-
-function formatToDDMMYYYY(value) {
-  if (!value) return "";
-  const [yyyy, mm, dd] = value.split("-");
-  return `${dd}/${mm}/${yyyy}`;
-}
-
-function verifyDates() {
-  const raw1 = document.getElementById("date1").value;
-  const raw2 = document.getElementById("date2").value;
-  const msg = document.getElementById("message");
-
-  const d1 = formatToDDMMYYYY(raw1);
-  const d2 = formatToDDMMYYYY(raw2);
-
-  if (d1 === correctDate1 && d2 === correctDate2) {
-    msg.innerHTML = "🤍 Correct. Please continue…";
-
-    setTimeout(() => {
-      window.location.href = "page3.html";
-    }, 1200);
-
+function check(){
+  if(fmt(d1.value)=="01/08/2007" && fmt(d2.value)=="09/08/2007"){
+    window.location.href="page3.html";
   } else {
-    attempts--;
-    if (attempts > 0) {
-      msg.innerHTML = `❌ Wrong answer. ${attempts} more tries.`;
-    } else {
-      msg.innerHTML = "❌ Access locked.";
-    }
+    tries--;
+    msg.innerText = tries>0 ? `Wrong. ${tries} tries left` : "Locked";
   }
 }
 </script>
