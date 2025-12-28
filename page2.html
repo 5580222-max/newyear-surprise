@@ -2,64 +2,200 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Page 2</title>
+<title>Thinking of You</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
 @font-face {
-  font-family: BebasKai;
-  src: url("BebasKai.ttf");
+  font-family: "BebasKai";
+  src: url("BebasKai.ttf") format("truetype");
 }
 
-body {
-  margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#fff;
-  font-family:BebasKai;
+/* COLORS */
+:root {
+  --primary-red: #b71c1c;
+  --soft-pink: rgba(255, 245, 247, 0.85);
 }
 
-#text {
-  font-size:1.6rem;
-  color:#b71c1c;
-  opacity:0;
-  filter:blur(15px);
-  transform:scale(0.9);
+body, html {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  font-family: 'Quicksand', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.show {
-  animation: appear 1.5s forwards;
+/* BACKGROUND MARQUEE */
+.background-marquee {
+  position: absolute;
+  top: 50%;
+  width: 200%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-family: 'Dancing Script', cursive;
+  font-size: 8vw;
+  color: rgba(183, 28, 28, 0.08);
+  pointer-events: none;
+  z-index: 1;
+  animation: scrollText 20s linear infinite;
 }
 
-@keyframes appear {
-  to { opacity:1; filter:blur(0); transform:scale(1); }
+@keyframes scrollText {
+  from { transform: translateY(-50%) translateX(0); }
+  to { transform: translateY(-50%) translateX(-50%); }
+}
+
+/* PETALS */
+.petal {
+  position: absolute;
+  border-radius: 150% 0 150% 0;
+  opacity: 0.7;
+  z-index: 2;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* CONTENT */
+.container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  width: 85%;
+  max-width: 500px;
+}
+
+/* MAIN MESSAGE */
+#lineBox {
+  font-family: "BebasKai", sans-serif;
+  background: var(--soft-pink);
+  backdrop-filter: blur(12px);
+  padding: 50px 30px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 182, 193, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  font-size: 1.55rem;
+  line-height: 1.85;
+  letter-spacing: 0.08em;
+  color: var(--primary-red);
+  opacity: 0;
+  filter: blur(18px);
+  transform: scale(0.92);
+}
+
+#lineBox.show {
+  animation: appearCinematic 1.8s forwards;
+}
+
+#lineBox.hide {
+  animation: disappearCinematic 1.4s forwards;
+}
+
+@keyframes appearCinematic {
+  0% { opacity: 0; filter: blur(20px); transform: scale(0.92); }
+  40% { opacity: 0.7; filter: blur(12px); transform: scale(0.92); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+
+@keyframes disappearCinematic {
+  0% { opacity: 1; filter: blur(0); transform: scale(1); }
+  100% { opacity: 0; filter: blur(20px); transform: scale(1.08); }
+}
+
+strong {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.6rem;
+  display: block;
+  margin-top: 20px;
+  color: #d81b60;
+}
+
+.tap-hint {
+  position: fixed;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  opacity: 0.4;
+  z-index: 100;
+  color: #b71c1c;
 }
 </style>
 </head>
 
 <body>
 
-<div id="text">Baby kuch der mein toh naya saal aa jayega 😌</div>
+<div class="background-marquee">
+  I MISS YOU BETI😭! &nbsp;&nbsp; I MISS YOU BETI😭!
+</div>
 
-<audio id="music" loop>
+<div id="petal-container"></div>
+
+<div class="container">
+  <div id="lineBox">Tap to begin... 🤍</div>
+</div>
+
+<div class="tap-hint">FOR YOU, ALWAYS</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop preload="auto">
   <source src="tu-he-mera.wav" type="audio/wav">
 </audio>
 
 <script>
-const text = document.getElementById("text");
-const music = document.getElementById("music");
+const box = document.getElementById("lineBox");
+const music = document.getElementById("bgMusic");
 
-document.body.onclick = () => {
-  music.volume = 0.5;
-  music.play().catch(()=>{});
-  text.classList.add("show");
+const lines = [
+  `Baby kuch der mein toh naya saal aa jayega 😌`,
+  `wowww yaarrr…<br>kitna aage aa gaye aapan 😌`,
+  `Yaad hai kya aapko kuch mahino pehle?<br>humne baat karna shuru hi kiya tha. 💕`,
+  `Sach kahu toh woh mere life ka<br>sabse best decision hai…<br>I mean it 🤍🤍🤍🤍`,
+  `Alhamdulillah! Allah ka shukar hai ki<br>hum dono ne baat karna shuru kiya... 😭💋`,
+  `Aur ab dekho… hum 2025 ke ending mein aa gaye hai 😍 roz ladh jhagad kar, right? 😏`,
+  `Waise toh bohot kuch bolna hai aapko 😌<br>par aage jo pages banaye hai… 🥰`,
+  `Chalo hum dono aage badhte hai ek saath.<br><strong>Are you ready?</strong>`
+];
 
-  setTimeout(()=>{
-    window.location.href="page2-gate.html";
-  }, 4000);
-};
+let index = -1;
+let animating = false;
+let musicStarted = false;
+
+function showNextLine() {
+  if (!musicStarted) {
+    music.volume = 0.5;      // 50% volume
+    music.play().catch(()=>{});
+    musicStarted = true;
+  }
+
+  if (animating) return;
+  animating = true;
+
+  if (index >= 0) box.className = "hide";
+
+  setTimeout(() => {
+    index++;
+    if (index < lines.length) {
+      box.innerHTML = lines[index];
+      box.className = "show";
+    }
+    animating = false;
+  }, index < 0 ? 0 : 1400);
+}
+
+document.body.addEventListener("click", showNextLine);
 </script>
 
 </body>
