@@ -2,186 +2,362 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Just One Thought - Page 1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Paglet ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
-/* ===== LOAD NEXA HEAVY FONT ===== */
-@font-face {
-  font-family: "NexaHeavy";
-  src: url("Nexa-Heavy.ttf") format("truetype");
+@font-face { font-family: "NexaHeavy"; src: url("Nexa-Heavy.ttf"); }
+@font-face { font-family: "BebasKai"; src: url("BebasKai.ttf"); }
+
+:root {
+    --primary-red: #b71c1c;
+    --soft-pink: rgba(255,245,247,0.9);
 }
 
-/* ===== BASE ===== */
-body {
-  margin: 0;
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "NexaHeavy", sans-serif;
-  overflow: hidden;
-  color: #111;
+html, body {
+    margin:0; padding:0;
+    width:100%; height:100%;
+    overflow:hidden;
+    font-family:'Quicksand', sans-serif;
 }
 
-/* ===== PAGE 1 CONTAINER ===== */
-#page1 {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 1.4s ease;
+.page {
+    position:absolute;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    transition:opacity 1.2s ease, filter 1.2s ease;
 }
 
-#page1.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
+.page.active { display:flex; }
+.fade-out { opacity:0; filter:blur(10px); pointer-events:none; }
 
-/* ===== MAIN BOX ===== */
+/* ---------- PAGE 1 ---------- */
+#page1 { background:#fff; z-index:10; }
+
 .main-box {
-  background: rgba(255,192,203,0.7);
-  border: 4px solid rgba(0,0,0,0.7);
-  padding: 30px;
-  width: 85%;
-  max-width: 500px;
-  text-align: center;
-  box-shadow: 10px 10px 0 rgba(0,0,0,0.2);
-  animation: breathe 7s ease-in-out infinite;
+    background:rgba(255,192,203,0.7);
+    border:4px solid rgba(0,0,0,0.7);
+    padding:30px;
+    width:85%;
+    max-width:450px;
+    text-align:center;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.2);
+    animation:breathe 7s ease-in-out infinite;
 }
 
 @keyframes breathe {
-  0%,100% { transform: scale(0.98); }
-  50% { transform: scale(1.02); }
+    0%,100%{transform:scale(0.98);}
+    50%{transform:scale(1.02);}
 }
 
-/* ===== TEXT ===== */
 .wrapper {
-  font-size: 1.25rem;
-  line-height: 1.65;
-  letter-spacing: 0.04em;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+    font-family:"NexaHeavy";
+    font-size:1.2rem;
+    line-height:1.6;
+    letter-spacing:0.04em;
 }
 
 .cursor {
-  display: inline-block;
-  width: 8px;
-  height: 1.2em;
-  background: #d02a50;
-  margin-left: 4px;
-  animation: blink 1s steps(2) infinite;
+    display:inline-block;
+    width:8px;
+    height:1.2em;
+    background:#d02a50;
+    margin-left:4px;
+    animation:blink 1s steps(2) infinite;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
-}
+@keyframes blink { 50%{opacity:0;} }
 
-/* ===== SOFT NEXT ===== */
 .soft-next {
-  margin-top: 18px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-  cursor: pointer;
+    margin-top:18px;
+    font-size:0.85rem;
+    opacity:0;
+    transition:1.5s;
+    color:#555;
 }
 
-/* ===== TAP ===== */
-.tap {
-  position: fixed;
-  bottom: 22px;
-  width: 100%;
-  text-align: center;
-  font-size: 0.85rem;
-  opacity: 0.6;
+.tap-to-start {
+    position:fixed;
+    bottom:30px;
+    width:100%;
+    text-align:center;
+    opacity:0.6;
+    font-size:0.8rem;
+}
+
+/* ---------- PAGE 2 ---------- */
+#page2 { background:#fff; z-index:5; }
+
+.background-marquee {
+    position:absolute;
+    top:50%;
+    width:200%;
+    transform:translateY(-50%);
+    white-space:nowrap;
+    font-family:'Dancing Script';
+    font-size:8vw;
+    color:rgba(183,28,28,0.08);
+    animation:scrollText 20s linear infinite;
+    pointer-events:none;
+}
+
+@keyframes scrollText {
+    from{transform:translateY(-50%) translateX(0);}
+    to{transform:translateY(-50%) translateX(-50%);}
+}
+
+#lineBox {
+    font-family:"BebasKai";
+    background:var(--soft-pink);
+    backdrop-filter:blur(10px);
+    padding:40px 25px;
+    border-radius:30px;
+    border:1px solid rgba(255,182,193,0.5);
+    box-shadow:0 15px 35px rgba(0,0,0,0.05);
+    font-size:1.4rem;
+    line-height:1.8;
+    color:var(--primary-red);
+    text-align:center;
+    max-width:400px;
+}
+
+.show { animation:appear 1.2s forwards; }
+.hide { animation:disappear 1s forwards; }
+
+@keyframes appear {
+    from{opacity:0; filter:blur(15px); transform:scale(0.9);}
+    to{opacity:1; filter:blur(0); transform:scale(1);}
+}
+
+@keyframes disappear {
+    from{opacity:1;}
+    to{opacity:0; filter:blur(15px); transform:scale(1.1);}
+}
+
+.petal {
+    position:absolute;
+    background:#ffc0cb;
+    border-radius:150% 0 150% 0;
+    opacity:0.6;
+    animation:fall linear infinite;
+}
+
+@keyframes fall {
+    0%{transform:translateY(-10vh) rotate(0); opacity:0;}
+    10%{opacity:0.7;}
+    100%{transform:translateY(110vh) rotate(360deg); opacity:0;}
+}
+
+/* ---------- PAGE 3 ---------- */
+#page3 { background:#fff; z-index:1; }
+
+.lock-container {
+    width:80%;
+    max-width:320px;
+}
+
+.box {
+    padding:20px;
+    background:#ffecec;
+    border-radius:20px;
+    margin-bottom:15px;
+    border:2px solid #f8bbd0;
+}
+
+.box p {
+    font-family:"BebasKai";
+    color:#b71c1c;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+input[type="date"] {
+    width:100%;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
+
+#btnContinue {
+    width:100%;
+    padding:15px;
+    background:#b71c1c;
+    color:#fff;
+    border:none;
+    border-radius:15px;
+    font-family:"BebasKai";
+    font-size:1.2rem;
+    cursor:pointer;
+}
+
+#msg {
+    text-align:center;
+    margin-top:10px;
+    font-weight:bold;
+    color:#b71c1c;
 }
 </style>
 </head>
 
 <body>
 
-<div id="page1">
-  <div class="main-box">
-    <div class="wrapper" id="text"></div>
-    <div class="soft-next" id="nextHint">
-      jab mann ho… aage badho
-    </div>
-  </div>
-</div>
-
-<div class="tap" id="tap">(tap to start)</div>
-
-<audio id="typingSound" preload="auto">
-  <source src="typing.wav" type="audio/wav">
+<audio id="typingSound" loop>
+    <source src="typing.wav" type="audio/wav">
 </audio>
 
+<audio id="bgMusic" loop>
+    <source src="tu-he-mera.wav" type="audio/wav">
+</audio>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+    <div class="main-box">
+        <div class="wrapper" id="typewriterText"></div>
+        <div class="soft-next" id="nextHint">jab mann ho… aage badho</div>
+    </div>
+    <div class="tap-to-start" id="tapStart">(tap to start)</div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+    <div class="background-marquee">I MISS YOU BETI 😭</div>
+    <div id="petal-container"></div>
+    <div id="lineBox">Tap to begin... 🤍</div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+    <div class="lock-container">
+        <div class="box">
+            <p>ENTER FALLO B'DAY</p>
+            <input type="date" id="d1" onclick="event.stopPropagation()">
+        </div>
+        <div class="box">
+            <p>ENTER NADEEM B'DAY</p>
+            <input type="date" id="d2" onclick="event.stopPropagation()">
+        </div>
+        <button id="btnContinue" onclick="event.stopPropagation(); checkLock()">CONTINUE</button>
+        <p id="msg"></p>
+    </div>
+</div>
+
 <script>
-/* ===== FINAL CONTENT ===== */
-const message =
-`Hello paglet!!!
-tumhara Nadeem tumhare baare mein hi soch raha hai hehehe 😘😘
-
-saal khatam hone wala hai na???
-abhi bhi apan jhagda toh nahi kar rahe na babu 🥰
-
-abhi toh aur pages baaki hai…
-babu, yahin sab padh logi kya ❤️`;
-
-const textEl = document.getElementById("text");
-const sound = document.getElementById("typingSound");
-const tapEl = document.getElementById("tap");
-const nextHint = document.getElementById("nextHint");
 const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const page3 = document.getElementById("page3");
+const typeEl = document.getElementById("typewriterText");
+const lineBox = document.getElementById("lineBox");
+const typingSound = document.getElementById("typingSound");
+const bgMusic = document.getElementById("bgMusic");
 
-let i = 0;
-let started = false;
-let typingDone = false;
+typingSound.volume = 0.8;
+bgMusic.volume = 0.6;
 
-/* AUDIO UNLOCK */
-function unlockAudio() {
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  if (ctx.state === "suspended") ctx.resume();
+let typingIdx = 0;
+let page1Started = false;
+let page1Done = false;
+let page2Idx = -1;
+let page2Animating = false;
+
+const message1 = `Hello paglet!!!\n
+tumhara Nadeem tumhare baare mein hi soch raha hai hehehe 😘😘\n
+abhi toh aur pages baaki hai… ❤️`;
+
+const lines2 = [
+`Baby kuch der mein toh naya saal aa jayega 😌`,
+`wowww yaarrr… kitna aage aa gaye aapan 😌`,
+`Sach kahu toh woh mera best decision tha 🤍`,
+`Alhamdulillah! Allah ka shukar hai 😭`,
+`Chalo aage badhte hai… Are you ready?`
+];
+
+function type() {
+    if (typingIdx < message1.length) {
+        typeEl.innerHTML = message1.slice(0, typingIdx + 1).replace(/\n/g,"<br>") + '<span class="cursor"></span>';
+        typingIdx++;
+        setTimeout(type, 50);
+    } else {
+        page1Done = true;
+        typingSound.pause();
+        document.getElementById("nextHint").style.opacity = "1";
+    }
 }
 
-/* TYPING */
-function typeText() {
-  if (i < message.length) {
-    textEl.innerHTML =
-      message.slice(0, i + 1).replace(/\n/g, "<br>") +
-      '<span class="cursor"></span>';
-    i++;
-    setTimeout(typeText, 50);
-  } else {
-    typingDone = true;
-    sound.pause();
-    nextHint.style.opacity = "0.8";
-  }
+function createPetal(){
+    const p = document.createElement("div");
+    p.className="petal";
+    p.style.width=p.style.height=(Math.random()*15+10)+"px";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(Math.random()*3+2)+"s";
+    document.getElementById("petal-container").appendChild(p);
+    setTimeout(()=>p.remove(),5000);
 }
 
-/* TRANSITION HOOK */
-function goToPage2() {
-  page1.classList.add("fade-out");
-  // Page 2 will be loaded/activated here later
-}
+document.body.addEventListener("click",()=>{
+    if(!page1Started){
+        page1Started=true;
+        document.getElementById("tapStart").style.display="none";
+        typingSound.play().catch(()=>{});
+        type();
+        return;
+    }
 
-/* TAP HANDLER */
-document.body.addEventListener("click", () => {
-  if (!started) {
-    started = true;
-    tapEl.style.display = "none";
-    unlockAudio();
-    sound.volume = 1.0;
-    sound.loop = true;
-    sound.play().catch(()=>{});
-    typeText();
-    return;
-  }
+    if(page1Done && page1.classList.contains("active")){
+        page1.classList.add("fade-out");
+        setTimeout(()=>{
+            page1.classList.remove("active");
+            page2.classList.add("active");
+            setInterval(createPetal,300);
+        },1200);
+        page1Done=false;
+        return;
+    }
 
-  if (typingDone) {
-    goToPage2();
-  }
+    if(page2.classList.contains("active") && !page2Animating){
+        page2Animating=true;
+        if(page2Idx>=0) lineBox.className="hide";
+
+        setTimeout(()=>{
+            page2Idx++;
+            if(page2Idx < lines2.length){
+                lineBox.innerHTML=lines2[page2Idx];
+                lineBox.className="show";
+                page2Animating=false;
+            } else {
+                page2.classList.add("fade-out");
+                setTimeout(()=>{
+                    page2.classList.remove("active");
+                    page3.classList.add("active");
+                },1200);
+            }
+        },800);
+    }
 });
+
+let tries = 3;
+function fmt(v){
+    if(!v) return "";
+    let [y,m,d]=v.split("-");
+    return `${d}/${m}/${y}`;
+}
+
+function checkLock(){
+    const d1=document.getElementById("d1").value;
+    const d2=document.getElementById("d2").value;
+    const msg=document.getElementById("msg");
+
+    if(fmt(d1)==="01/08/2007" && fmt(d2)==="09/08/2007"){
+        msg.style.color="green";
+        msg.innerText="Correct! Happy New Year Baby ❤️";
+    } else {
+        tries--;
+        msg.innerText=tries>0 ? `Galat hai babu! ${tries} mauke bache hai` : "Locked. Refresh page.";
+    }
+}
 </script>
 
 </body>
