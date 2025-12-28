@@ -13,7 +13,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Segoe UI", sans-serif;
   overflow: hidden;
 }
 
@@ -25,7 +25,6 @@ body {
   line-height: 1.75;
   letter-spacing: 0.015em;
   color: #ffffff;
-  transform: scale(0.97);
   animation: breathe 7s ease-in-out infinite;
 }
 
@@ -39,10 +38,9 @@ body {
   display: inline-block;
   width: 8px;
   height: 1.4em;
-  background: rgba(255,255,255,0.85);
+  background: white;
   margin-left: 4px;
   animation: blink 1s steps(2) infinite;
-  vertical-align: bottom;
 }
 
 @keyframes blink {
@@ -63,10 +61,10 @@ body {
 <body>
 
 <div class="wrapper" id="text"></div>
-<div class="tap" id="tap">(tap to start)</div>
+<div class="tap" id="tap">(tap to start – use earphones 🎧)</div>
 
-<audio id="typingSound" preload="auto">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_26e8d2a3f5.mp3" type="audio/mpeg">
+<audio id="typingSound">
+  <source src="clicking-keyboard-asmr-sfx-356115.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -84,26 +82,21 @@ const textEl = document.getElementById("text");
 const sound = document.getElementById("typingSound");
 const tapEl = document.getElementById("tap");
 
-let index = 0;
+let i = 0;
 let started = false;
 
-// 🔑 AUDIO CONTEXT UNLOCK (CRITICAL)
-let audioCtx;
-
 function unlockAudio() {
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === "suspended") {
-    audioCtx.resume();
-  }
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === "suspended") ctx.resume();
 }
 
 function typeText() {
-  if (index < message.length) {
+  if (i < message.length) {
     textEl.innerHTML =
-      message.slice(0, index + 1).replace(/\n/g, "<br>") +
+      message.slice(0, i + 1).replace(/\n/g, "<br>") +
       '<span class="cursor"></span>';
-    index++;
-    setTimeout(typeText, 40);
+    i++;
+    setTimeout(typeText, 38);
   } else {
     sound.pause();
     textEl.innerHTML = message.replace(/\n/g, "<br>");
@@ -115,10 +108,10 @@ document.body.addEventListener("click", () => {
     started = true;
     tapEl.style.display = "none";
 
-    unlockAudio();               // ✅ unlock audio
-    sound.volume = 1.0;          // loud
-    sound.currentTime = 0;
-    sound.play().catch(() => {}); // ignore silent block
+    unlockAudio();
+    sound.volume = 1.0;
+    sound.loop = true;
+    sound.play().catch(()=>{});
 
     typeText();
   }
@@ -127,4 +120,3 @@ document.body.addEventListener("click", () => {
 
 </body>
 </html>
-
