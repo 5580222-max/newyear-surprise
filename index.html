@@ -2,186 +2,54 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Just One Thought - Page 1</title>
+<title>Page 1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== LOAD NEXA HEAVY FONT ===== */
 @font-face {
-  font-family: "NexaHeavy";
-  src: url("Nexa-Heavy.ttf") format("truetype");
+  font-family: NexaHeavy;
+  src: url("Nexa-Heavy.ttf");
 }
 
-/* ===== BASE ===== */
 body {
-  margin: 0;
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "NexaHeavy", sans-serif;
-  overflow: hidden;
-  color: #111;
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:NexaHeavy;
+  background:#fff;
 }
 
-/* ===== PAGE 1 CONTAINER ===== */
-#page1 {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 1.4s ease;
-}
-
-#page1.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ===== MAIN BOX ===== */
-.main-box {
+.box {
   background: rgba(255,192,203,0.7);
-  border: 4px solid rgba(0,0,0,0.7);
-  padding: 30px;
-  width: 85%;
-  max-width: 500px;
-  text-align: center;
-  box-shadow: 10px 10px 0 rgba(0,0,0,0.2);
-  animation: breathe 7s ease-in-out infinite;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
 }
-
-@keyframes breathe {
-  0%,100% { transform: scale(0.98); }
-  50% { transform: scale(1.02); }
-}
-
-/* ===== TEXT ===== */
-.wrapper {
-  font-size: 1.25rem;
-  line-height: 1.65;
-  letter-spacing: 0.04em;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
-}
-
-.cursor {
-  display: inline-block;
-  width: 8px;
-  height: 1.2em;
-  background: #d02a50;
-  margin-left: 4px;
-  animation: blink 1s steps(2) infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* ===== SOFT NEXT ===== */
-.soft-next {
-  margin-top: 18px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-  cursor: pointer;
-}
-
-/* ===== TAP ===== */
-.tap {
-  position: fixed;
-  bottom: 22px;
-  width: 100%;
-  text-align: center;
-  font-size: 0.85rem;
-  opacity: 0.6;
+button {
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  border-radius:15px;
+  background:#b71c1c;
+  color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<div id="page1">
-  <div class="main-box">
-    <div class="wrapper" id="text"></div>
-    <div class="soft-next" id="nextHint">
-      jab mann ho… aage badho
-    </div>
-  </div>
+<div class="box">
+  <p>Hello paglet!!! 💕</p>
+  <p>jab mann ho… aage badho</p>
+  <button onclick="goNext()">AAGE</button>
 </div>
 
-<div class="tap" id="tap">(tap to start)</div>
-
-<audio id="typingSound" preload="auto">
-  <source src="typing.wav" type="audio/wav">
-</audio>
-
 <script>
-/* ===== FINAL CONTENT ===== */
-const message =
-`Hello paglet!!!
-tumhara Nadeem tumhare baare mein hi soch raha hai hehehe 😘😘
-
-saal khatam hone wala hai na???
-abhi bhi apan jhagda toh nahi kar rahe na babu 🥰
-
-abhi toh aur pages baaki hai…
-babu, yahin sab padh logi kya ❤️`;
-
-const textEl = document.getElementById("text");
-const sound = document.getElementById("typingSound");
-const tapEl = document.getElementById("tap");
-const nextHint = document.getElementById("nextHint");
-const page1 = document.getElementById("page1");
-
-let i = 0;
-let started = false;
-let typingDone = false;
-
-/* AUDIO UNLOCK */
-function unlockAudio() {
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  if (ctx.state === "suspended") ctx.resume();
+function goNext(){
+  window.location.href = "page2.html";
 }
-
-/* TYPING */
-function typeText() {
-  if (i < message.length) {
-    textEl.innerHTML =
-      message.slice(0, i + 1).replace(/\n/g, "<br>") +
-      '<span class="cursor"></span>';
-    i++;
-    setTimeout(typeText, 50);
-  } else {
-    typingDone = true;
-    sound.pause();
-    nextHint.style.opacity = "0.8";
-  }
-}
-
-/* TRANSITION HOOK */
-function goToPage2() {
-  page1.classList.add("fade-out");
-  // Page 2 will be loaded/activated here later
-}
-
-/* TAP HANDLER */
-document.body.addEventListener("click", () => {
-  if (!started) {
-    started = true;
-    tapEl.style.display = "none";
-    unlockAudio();
-    sound.volume = 1.0;
-    sound.loop = true;
-    sound.play().catch(()=>{});
-    typeText();
-    return;
-  }
-
-  if (typingDone) {
-    goToPage2();
-  }
-});
 </script>
 
 </body>
